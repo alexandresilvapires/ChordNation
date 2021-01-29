@@ -1,0 +1,44 @@
+-----
+Projeto:
+	Criar uma aplicação windows que sugere acordes com base em chord progressions comuns, e reconhece devices MIDI para ouvir se estamos a tocar o acorde.
+-----
+
+Plano:
+
+-Decidir linguagens de backend, database, front end, api's midi, etc:
+	Backend:
+	Database:
+	Ligação entre 
+	Frontend:
+	MIDI:
+	
+-Decidir codificação para cada acorde, e como os gerar:
+	Transformar coisas tipo (ii-V-I) dado uma key, em acordes (D-, G7, CMaj7), e obter todas as notas necessárias em cada acorde.
+	
+	Ideias:
+		Notas -> C = 1, C# = 2, etc independente da oitava (nota =  1 + nota % 12) - Done
+		
+		key -> Dizer só nota inicial - Done
+		
+		Escalas -> Conjunto Maj = (T,T,t,T,T,T,t), t=1, T=2, Tt=3 TT=4 - Done
+			Aplicar da forma: note[i+1] = 1+ (note[i] + escale[i])%12
+			Retorna array de notas: Ex: Maj -> (1,3,5,6,8,10,11), Min -> (1,3,4,6,8,9,11)
+	
+		Modo -> é tratado como uma escala, mas pode ser feito ao circular o array: (T,T,t) -> 1 avanço (t, T, T) - Done
+		
+		Intervalo -> intervalo fixo de offsets a adicionar à root: 1->0, 2- -> 1, 2+ -> 2, etc (com dim, aug, min, maj, perfect)
+	
+		Root dum Acorde -> Guarda nº das notas dos acordes: ii OU II = escala[1], onde bii = escalas[1]-1 , e #ii = escalas[1]+10
+		Acorde -> vai buscar intervalos consoante root: Maj = (1, 3, 5, 7), com possibilidade para extensões
+			ideia é ser possivel dizer acorde(C, Maj, [extensões: 9]) <1, (1, 3, 5, 7), (9)>, devolve notas: (1,5,8,11,3)
+		
+		função que devolve extensões que funcionam
+		
+		Progressão: key = #algo; p = (<2, Minor7>, <5, Dominant>, <1, Major7>); for n in range(0,p.size): notas[i] = acorde(getInterval(p[i][0], key), p[i][1], getExtentions(p[i][1]))
+		
+		base de dados: Guarda conjuntos Key->Note, Escala/Modo -> Nomes, etc
+		
+-Sistema de detecção de notas:
+	Sabendo as notas necessárias, pegar no midi e ver se estão a fazer
+	
+-Sistema gráfico
