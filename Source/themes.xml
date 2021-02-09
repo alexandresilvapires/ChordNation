@@ -1,0 +1,50 @@
+# Handmade themes for Chordnation, by .Lx
+# Decide colors and fonts for the app
+
+<?xml version="1.0"?>
+<data>
+    <theme name="Royal">
+        <colors>
+            <maincolor name = "#f9f6ff"></maincolor>
+            <accentcolor name = "#b1acbe"></accentcolor>
+            <sheetcolor name = "#ffffff"></sheetcolor>
+            <todocolor name = "#b1acbe"></todocolor>
+            <donecolor name = "#065e0a"></donecolor>
+            <challangetextcolor name = "#272727"></challangetextcolor>
+            <optionstextcolor name = "#272727"></optionstextcolor>
+
+            <unpressedwhitekeycolor name = "#ffffff"></unpressedwhitekeycolor>
+            <pressedwhitekeycolor name = "#b1acbe"></pressedwhitekeycolor>
+            <unpressedblackkeycolor name = "#000000"></unpressedblackkeycolor>
+            <pressedblackkeycolor name = "#706b7d"></pressedblackkeycolor>
+        </colors>
+
+        <fonts>
+            <challangefont name = "Palatino Linotype"></challangefont>
+            <optionsfont name = "Palatino Linotype"></optionsfont>
+            <signaturefont name = "Script MT Bold"></signaturefont>
+        </fonts>
+    </theme>
+    <theme name="Incognito">
+        <colors>
+            <maincolor name = "#1e253c"></maincolor>
+            <accentcolor name = "#0e111a"></accentcolor>
+            <sheetcolor name = "#000000"></sheetcolor>
+            <todocolor name = "#b1acbe"></todocolor>
+            <donecolor name = "#148319"></donecolor>
+            <challangetextcolor name = "#c8d1f1"></challangetextcolor>
+            <optionstextcolor name = "#c8d1f1"></optionstextcolor>
+
+            <unpressedwhitekeycolor name = "#5a6176"></unpressedwhitekeycolor>
+            <pressedwhitekeycolor name = "#1a1e28"></pressedwhitekeycolor>
+            <unpressedblackkeycolor name = "#070c1c"></unpressedblackkeycolor>
+            <pressedblackkeycolor name = "#000000"></pressedblackkeycolor>
+        </colors>
+
+        <fonts>
+            <challangefont name = "Palatino Linotype"></challangefont>
+            <optionsfont name = "Palatino Linotype"></optionsfont>
+            <signaturefont name = "Script MT Bold"></signaturefont>
+        </fonts>
+    </theme>
+</data>

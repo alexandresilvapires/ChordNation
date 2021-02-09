@@ -3,9 +3,13 @@
 
 import music
 import rtmidi
+import PySimpleGUI as sg
+import styles
 import random
 
+# ------------------------
 # MIDI-Handler
+# ------------------------
 
 def setup_midi_connection(port):
     """ Sets up midi connection by enabling port given, returns midiin class"""
@@ -33,7 +37,9 @@ def convert_midi_message_note_number_status(message) -> int:
     return (message[0][1] % 12, message[0][2] != 0)
 
 
-# Objective Generator
+# ------------------------
+# Challange Generation
+# ------------------------
 
 def play_chord(midiin, objective):
     """ Given an objective array (size 12, where False = note i not needed for chord)
@@ -85,8 +91,37 @@ def challange_generator(midiin, progs, scales):
         print(prog[0], "in the key of",key)
         play_progression(midiin,progression)
 
+# ------------------------
+# Database Handling
+# ------------------------
+
+# ------------------------
+# GUI Handling
+# ------------------------
 
 
+sg.theme('DarkAmber')   # Add a touch of color
+# All the stuff inside your window.
+layout = [  [sg.Text('Some text on Row 1')],
+            [sg.Text('Enter something on Row 2'), sg.InputText()],
+            [sg.Button('Ok'), sg.Button('Cancel')] ]
+
+# Create the Window
+window = sg.Window('Window Title', layout)
+# Event Loop to process "events" and get the "values" of the inputs
+while True:
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+        break
+    print('You entered ', values[0])
+
+window.close()
+
+# ------------------------
+# Startup
+# ------------------------
+
+"""
 Major = ['T','T','t','T','T','T','t']
 twofiveone= [['II',[(3,'m'),(5,'p'),(7,'m')]],
                                     ['V',[(3,'M'),(5,'p'),(7,'m')]],
@@ -95,3 +130,4 @@ twofiveone= [['II',[(3,'m'),(5,'p'),(7,'m')]],
 midiin = setup_midi_connection(0)
 
 challange_generator(midiin, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (Major, Major))
+"""
