@@ -31,7 +31,7 @@ def number_to_note(number) -> int:
 
     number = note_format(number)
 
-    notes = ['C','C#','D','D#','E','F','F#','G','A','A#','B']
+    notes = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B']
 
     return notes[number]
 

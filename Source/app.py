@@ -3,6 +3,7 @@
 
 import music
 import rtmidi
+import random
 
 # MIDI-Handler
 
@@ -32,6 +33,8 @@ def convert_midi_message_note_number_status(message) -> int:
     return (message[0][1] % 12, message[0][2] != 0)
 
 
+# Objective Generator
+
 def play_chord(midiin, objective):
     """ Given an objective array (size 12, where False = note i not needed for chord)
         only stops when the only input notes are the same as objective """
@@ -46,6 +49,8 @@ def play_chord(midiin, objective):
             
             #Turns current note in current status array equal to pressedStatus
             current[note[0]] = note[1]
+            print(current)
+            print(objective)
 
             #TODO: Set notes in keyboard and on screen correctly
 
@@ -64,12 +69,29 @@ def play_progression(midiin, progression):
 
     print("Success!")
 
+def challange_generator(midiin, progs, scales):
+    """ Given a list of possible progressions (name, progression), plays a random progression in a random key"""
+
+    while(True):
+        # Picks a random progression, scale and key, and makes the progression
+        prog = random.choice(progs)
+        scale = random.choice(scales)
+        key = random.choice(['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','B'])
+
+        print(prog, scale, key)
+
+        progression = music.make_progression(key, scale, prog[1])
+
+        print(prog[0], "in the key of",key)
+        play_progression(midiin,progression)
+
+
 
 Major = ['T','T','t','T','T','T','t']
-a = music.make_progression('D', Major, [['II',[(3,'m'),(5,'p'),(7,'m')]],
+twofiveone= [['II',[(3,'m'),(5,'p'),(7,'m')]],
                                     ['V',[(3,'M'),(5,'p'),(7,'m')]],
-                                    ['I',[(3,'M'),(5,'p'),(7,'M')]]])
+                                    ['I',[(3,'M'),(5,'p'),(7,'M')]]]
 
 midiin = setup_midi_connection(0)
 
-play_progression(midiin, a)
+challange_generator(midiin, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (Major, Major))
