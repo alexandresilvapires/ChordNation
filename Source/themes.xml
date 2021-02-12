@@ -1,50 +1,43 @@
-# Handmade themes for Chordnation, by .Lx
-# Decide colors and fonts for the app
+<?xml version="1.0" encoding="UTF-8" ?>
 
-<?xml version="1.0"?>
-<data>
+<!--Handmade themes for Chordnation, by .Lx -->
+<!--Decide colors and fonts for the app -->
+
+<data name = "Default">
     <theme name="Royal">
-        <colors>
-            <maincolor name = "#f9f6ff"></maincolor>
-            <accentcolor name = "#b1acbe"></accentcolor>
-            <sheetcolor name = "#ffffff"></sheetcolor>
-            <todocolor name = "#b1acbe"></todocolor>
-            <donecolor name = "#065e0a"></donecolor>
-            <challangetextcolor name = "#272727"></challangetextcolor>
-            <optionstextcolor name = "#272727"></optionstextcolor>
+        <maincolor>#dfdaea</maincolor>
+        <accentcolor>#b1acbe</accentcolor>
+        <sheetcolor>#ffffff</sheetcolor>
+        <todocolor>#a42222</todocolor>
+        <donecolor>#065e0a</donecolor>
+        <challangetextcolor>#272727</challangetextcolor>
+        <optionstextcolor>#b1acbe</optionstextcolor>
 
-            <unpressedwhitekeycolor name = "#ffffff"></unpressedwhitekeycolor>
-            <pressedwhitekeycolor name = "#b1acbe"></pressedwhitekeycolor>
-            <unpressedblackkeycolor name = "#000000"></unpressedblackkeycolor>
-            <pressedblackkeycolor name = "#706b7d"></pressedblackkeycolor>
-        </colors>
+        <unpressedwhitekeycolor>#ffffff</unpressedwhitekeycolor>
+        <pressedwhitekeycolor>#b1acbe</pressedwhitekeycolor>
+        <unpressedblackkeycolor>#000000</unpressedblackkeycolor>
+        <pressedblackkeycolor>#706b7d</pressedblackkeycolor>
 
-        <fonts>
-            <challangefont name = "Palatino Linotype"></challangefont>
-            <optionsfont name = "Palatino Linotype"></optionsfont>
-            <signaturefont name = "Script MT Bold"></signaturefont>
-        </fonts>
+        <challangefont>Palatino Linotype</challangefont>
+        <optionsfont>Palatino Linotype</optionsfont>
+        <signaturefont>Script MT Bold</signaturefont>
     </theme>
     <theme name="Incognito">
-        <colors>
-            <maincolor name = "#1e253c"></maincolor>
-            <accentcolor name = "#0e111a"></accentcolor>
-            <sheetcolor name = "#000000"></sheetcolor>
-            <todocolor name = "#b1acbe"></todocolor>
-            <donecolor name = "#148319"></donecolor>
-            <challangetextcolor name = "#c8d1f1"></challangetextcolor>
-            <optionstextcolor name = "#c8d1f1"></optionstextcolor>
+        <maincolor>#1e253c</maincolor>
+        <accentcolor>#0e111a</accentcolor>
+        <sheetcolor>#000000</sheetcolor>
+        <todocolor>#a42222</todocolor>
+        <donecolor>#148319</donecolor>
+        <challangetextcolor>#c8d1f1</challangetextcolor>
+        <optionstextcolor>#c8d1f1</optionstextcolor>
 
-            <unpressedwhitekeycolor name = "#5a6176"></unpressedwhitekeycolor>
-            <pressedwhitekeycolor name = "#1a1e28"></pressedwhitekeycolor>
-            <unpressedblackkeycolor name = "#070c1c"></unpressedblackkeycolor>
-            <pressedblackkeycolor name = "#000000"></pressedblackkeycolor>
-        </colors>
+        <unpressedwhitekeycolor>#5a6176</unpressedwhitekeycolor>
+        <pressedwhitekeycolor>#1a1e28</pressedwhitekeycolor>
+        <unpressedblackkeycolor>#070c1c</unpressedblackkeycolor>
+        <pressedblackkeycolor>#000000</pressedblackkeycolor>
 
-        <fonts>
-            <challangefont name = "Palatino Linotype"></challangefont>
-            <optionsfont name = "Palatino Linotype"></optionsfont>
-            <signaturefont name = "Script MT Bold"></signaturefont>
-        </fonts>
+        <challangefont>Palatino Linotype</challangefont>
+        <optionsfont>Palatino Linotype</optionsfont>
+        <signaturefont>Script MT Bold</signaturefont>
     </theme>
 </data>

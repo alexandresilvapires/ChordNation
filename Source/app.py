@@ -1,11 +1,19 @@
 # Main app file for Chordnation, by .Lx
 # Handles communication between GUI and Database, and handles MIDI input
 
+from PyQt5 import QtCore
+from PyQt5.QtCore import QSize
+from PyQt5.QtGui import QFont
+from PySimpleGUI.PySimpleGUI import TRANSPARENT_BUTTON
 import music
 import rtmidi
-import PySimpleGUI as sg
 import styles
 import random
+
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+import sys
+import mainWindow
 
 # ------------------------
 # MIDI-Handler
@@ -99,23 +107,23 @@ def challange_generator(midiin, progs, scales):
 # GUI Handling
 # ------------------------
 
+ct = styles.theme()
+ct.set_via_theme_name("Incognito")
 
-sg.theme('DarkAmber')   # Add a touch of color
-# All the stuff inside your window.
-layout = [  [sg.Text('Some text on Row 1')],
-            [sg.Text('Enter something on Row 2'), sg.InputText()],
-            [sg.Button('Ok'), sg.Button('Cancel')] ]
 
-# Create the Window
-window = sg.Window('Window Title', layout)
-# Event Loop to process "events" and get the "values" of the inputs
-while True:
-    event, values = window.read()
-    if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
-        break
-    print('You entered ', values[0])
 
-window.close()
+def make_mainWindow():
+    """ Generates the main program window """
+
+    app = QApplication(sys.argv)
+    mainWin = QtWidgets.QMainWindow()
+    win = mainWindow.Ui_mainWindow()
+    win.setupUi(mainWin, ct)
+    mainWin.show()
+    sys.exit(app.exec_())
+
+
+make_mainWindow()
 
 # ------------------------
 # Startup
