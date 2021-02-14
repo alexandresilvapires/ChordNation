@@ -1,0 +1,17 @@
+
+
+    def changeKey(self, ct, keynumber, isWhite, isPressed):
+        """ Given a keynumber (where A=0, the first key in the 88-key keyboard),
+        turns that into pressed/unpressed theme color """
+
+        # Based on key, executes command to change the key color
+        if(isWhite):
+            if(isPressed):
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.pressedwhitekeycolor+'")')
+            else:
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.unpressedwhitekeycolor+'")')
+        else:
+            if(isPressed):
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.pressedblackkeycolor+'")')
+            else:
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.unpressedblackkeycolor+'")')
