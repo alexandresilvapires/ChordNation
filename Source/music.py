@@ -315,6 +315,20 @@ def note_from_scale_accidental(scale:list, root, symbol):
 # Intervals
 # ------------------------
 
+def sep_interval_pair(interval):
+    """ Given a interval in the form "numberQuality", separates it into (number,quality)"""
+
+    numbersTemp = ''
+    quality = ''
+
+    for letter in interval:
+        if letter in ['0','1','2','3','4','5','6','7','8','9']:
+            numbersTemp += letter
+        else:
+            quality += letter
+    print(numbersTemp, quality)
+    return (eval(numbersTemp),quality)
+
 def note_from_interval(note, interval: int, quality):
     """ Given a note, an interval [1,15] and a quality (+,-,a,d,p) 
     returns the note that given interval's away from the other"""
@@ -423,6 +437,30 @@ def chord_to_note_1_12(chord, in_notes):
         ar[note] = True
 
     return ar
+
+def format_prog_from_database(prog):
+    """ Given a progression from the database, it is formated into a easier-to-work format:
+    [['II',"m7", '["3m","5p","7m"]'], ['V',"7", '["3M","5p","7m"]'], ['I',"maj7", '["3M","5p","7M"]']]
+    
+    Gets turned into:
+
+    [['II', 'm7', [(3, 'm'), (5, 'p'), (7, 'm')]], ['V', '7', [(3, 'M'), (5, 'p'), (7, 'm')]], ['I', 'maj7', [(3, 'M'), (5, 'p'), (7, 'M')]]]
+    """
+    
+    formatedProg = []
+    
+    for chord in prog:
+        newChord = [chord[0], chord[1]]
+
+        intervals = eval(chord[2])
+        newIntervals = []
+        for i in intervals:
+            newIntervals.append(sep_interval_pair(i))
+
+        newChord.append(newIntervals)
+        formatedProg.append(newChord)
+    print(formatedProg)
+    return formatedProg
 
 # ------------------------
 # Examples

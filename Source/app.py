@@ -2,13 +2,15 @@
 # Handles communication between GUI and Database, and handles MIDI input
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSize
+from PyQt5.QtCore import QSize, QThread
 from PyQt5.QtGui import QFont
-from PySimpleGUI.PySimpleGUI import TRANSPARENT_BUTTON
+from PySimpleGUI.PySimpleGUI import TRANSPARENT_BUTTON, theme
 import music
 import rtmidi
 import styles
+
 import random
+import time
 
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
@@ -44,12 +46,17 @@ def convert_midi_message_note_number_status(message) -> int:
     # Adds status True if sensitivity > 0
     return (message[0][1] % 12, message[0][2] != 0)
 
+def convert_midi_message_to_key_number(message) -> int:
+    """ Given a midi message, returns the number of the key corresponding to the note involved """
+
+    # Gets the message that contains the key and changes it to have a 0 where the keys start
+    return message[0][1]-21
 
 # ------------------------
 # Challange Generation
 # ------------------------
 
-def play_chord(midiin, objective):
+def play_chord(midiin, window, ct, objective):
     """ Given an objective array (size 12, where False = note i not needed for chord)
         only stops when the only input notes are the same as objective """
     current = [False,False,False,False,False,False,False,False,False,False,False,False]
@@ -59,17 +66,25 @@ def play_chord(midiin, objective):
         if(midi_message != None):
 
             #gets note in format (note_number, pressedStatus)
-            note = convert_midi_message_note_number_status(midi_message)
+            noteStat = convert_midi_message_note_number_status(midi_message)
             
             #Turns current note in current status array equal to pressedStatus
-            current[note[0]] = note[1]
-            print(current)
-            print(objective)
+            current[noteStat[0]] = noteStat[1]
 
-            #TODO: Set notes in keyboard and on screen correctly
+            # Change key in window to theme color
+            keynumber = convert_midi_message_to_key_number(midi_message)
 
-def play_progression(midiin, progression):
+            #   To check if a key is white, checks if the pressed note is one of the white keys
+            isWhite = noteStat[0] in [0,2,4,5,7,9,11]
+
+            window.changeKey(ct, keynumber, isWhite, noteStat[1])
+
+
+def play_progression(midiin, window, ct, progression):
     """ Given a chord progression, makes player play each chord """
+
+    #Writes each chord in window
+
 
     #For each chord, highlights message, and makes midi recognition
     for chord in progression:
@@ -79,25 +94,64 @@ def play_progression(midiin, progression):
 
         #Make player play chord
         objective = music.chord_to_note_1_12(chord, True)
-        play_chord(midiin, objective)
+        play_chord(midiin, window, ct, objective)
 
     print("Success!")
 
-def challange_generator(midiin, progs, scales):
+def challange_generator(midiin, window, ct, progs, scales):
     """ Given a list of possible progressions (name, progression), plays a random progression in a random key"""
 
-    while(True):
-        # Picks a random progression, scale and key, and makes the progression
-        prog = random.choice(progs)
-        scale = random.choice(scales)
-        key = random.choice(['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','B'])
+    # Picks a random progression, scale and key, and makes the progression
+    prog = random.choice(progs)
+    scale = random.choice(scales)
+    key = random.choice(['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','B'])
 
-        print(prog, scale, key)
+    print(prog, scale, key)
 
-        progression = music.make_progression(key, scale, prog[1])
+    progression = music.make_progression(key, scale, prog[1])
 
-        print(prog[0], "in the key of",key)
-        play_progression(midiin,progression)
+    print(prog[0], "in the key of",key)
+    play_progression(midiin, window, ct, progression)
+
+# ------------------------
+# Startup
+# ------------------------
+
+class challangeThread(QThread):
+    def __init__(self, c_theme, window):
+        QThread.__init__(self)
+        self.ct = c_theme
+        self.win = window
+    
+    def __del__(self):
+        self.wait()
+    
+    def run(self):
+        """ Handles the full program after main window creation, handling MIDI setup and calling exercice generation """
+        # Sets up MIDI
+        midiin = setup_midi_connection(0)
+
+        # Starts exercise (still temporary)
+
+        #TODO: get stuff from database
+        MajorScale = ['T','T','t','T','T','T','t']
+
+        #When getting the progression from the database, we keep each chord in order of appearence,
+        #   composed by: ScaleNote (eg: II), and a list which especifies the chord
+        #   as ["ChordSymbol","ListOfIntervalsWhichMakeItUp"].
+        #   To use the list of intervals, it needs to be eval'd and seperated into (IntervalSize,'quality'), 
+        #   which is done next
+
+        twofiveone = [['II',"m7", '["3m","5p","7m"]'],
+                ['V',"7", '["3M","5p","7m"]'],
+                ['I',"maj7", '["3M","5p","7M"]']]
+
+        twofiveone = music.format_prog_from_database(twofiveone)
+
+        # Todo: get new format fixed in challange
+        time.sleep(1)
+        #challange_generator(midiin, self.ct,self.win, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (MajorScale, MajorScale))
+
 
 # ------------------------
 # Database Handling
@@ -112,30 +166,25 @@ ct.set_via_theme_name("Incognito")
 
 
 
-def make_mainWindow():
-    """ Generates the main program window """
+def startup():
+    """ Generates the main program window and runs main program"""
 
     app = QApplication(sys.argv)
     mainWin = QtWidgets.QMainWindow()
     win = mainWindow.Ui_mainWindow()
     win.setupUi(mainWin, ct)
     mainWin.show()
+
+    # Runs main program code in a thread
+    challageGen = challangeThread(win, ct)
+    challageGen.start()
+
+    #Starts GUI
     sys.exit(app.exec_())
 
 
-make_mainWindow()
-
 # ------------------------
-# Startup
+# Function Calls
 # ------------------------
 
-"""
-Major = ['T','T','t','T','T','T','t']
-twofiveone= [['II',[(3,'m'),(5,'p'),(7,'m')]],
-                                    ['V',[(3,'M'),(5,'p'),(7,'m')]],
-                                    ['I',[(3,'M'),(5,'p'),(7,'M')]]]
-
-midiin = setup_midi_connection(0)
-
-challange_generator(midiin, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (Major, Major))
-"""
+startup()

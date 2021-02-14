@@ -1030,7 +1030,7 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QFrame" name="ke62">
+   <widget class="QFrame" name="key62">
     <property name="geometry">
      <rect>
       <x>720</x>
@@ -2183,7 +2183,7 @@ by .lx</string>
    <zorder>key70</zorder>
    <zorder>key77</zorder>
    <zorder>key72</zorder>
-   <zorder>ke62</zorder>
+   <zorder>key62</zorder>
    <zorder>key67</zorder>
    <zorder>key75</zorder>
    <zorder>key65</zorder>

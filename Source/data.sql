@@ -12,23 +12,22 @@ insert into scale values ('Gypsy', '["T","t","Tt","t","t","T","T"]');
 
 
 -- Chords (Ver forma de fazer extensions)
-insert into chord values ("Major", '["3M","5p"]');
-insert into chord values ("Augmented", '["3M","5a"]');
-insert into chord values ("Minor", '["3m","5p"]');
-insert into chord values ("Diminished", '["3m","5d"]');
-insert into chord values ("Dominant", '["3M","5p","7m"]');
-insert into chord values ("Major7", '["3M","5p","7M"]');
-insert into chord values ("Augmented7", '["3M","5a","7m"]');
-insert into chord values ("Minor7", '["3m","5p","7m"]');
-insert into chord values ("Minor-Major", '["3m","5p","7M"]');
-insert into chord values ("Diminished7", '["3m","5d","7d"]');
-insert into chord values ("Half-Diminished7", '["3m","5d","7m"]');
-insert into chord values ("Major7", '["3M","5p","7M"]');
-insert into chord values ("Major6", '["3M","5p","6M"]');
-insert into chord values ("Minor6", '["3m","5p","6M"]');
-insert into chord values ("Sus2", '["2M","5p"]');
-insert into chord values ("Sus4", '["4p","5p"]');
-insert into chord values ("JazzSus", '["4p","5p","7m","9M"]');
+insert into chord values ("Major", "", '["3M","5p"]');
+insert into chord values ("Augmented", "aug",'["3M","5a"]');
+insert into chord values ("Minor", "m",'["3m","5p"]');
+insert into chord values ("Diminished", "o", '["3m","5d"]');
+insert into chord values ("Dominant", "7", '["3M","5p","7m"]');
+insert into chord values ("Major7", "maj7", '["3M","5p","7M"]');
+insert into chord values ("Augmented7", "aug7", '["3M","5a","7m"]');
+insert into chord values ("Minor7", "m7", '["3m","5p","7m"]');
+insert into chord values ("Minor-Major", "mM7", '["3m","5p","7M"]');
+insert into chord values ("Diminished7", "o7", '["3m","5d","7d"]');
+insert into chord values ("Half-Diminished7", "ø7", '["3m","5d","7m"]');
+insert into chord values ("Major6", "6", '["3M","5p","6M"]');
+insert into chord values ("Minor6", "m6", '["3m","5p","6M"]');
+insert into chord values ("Sus2", "sus2", '["2M","5p"]');
+insert into chord values ("Sus4", "sus4", '["4p","5p"]');
+insert into chord values ("JazzSus", "9sus4", '["4p","5p","7m","9M"]');
 /*TODO EXTENSIONS*/
 
 

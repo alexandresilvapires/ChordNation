@@ -340,12 +340,12 @@ class Ui_mainWindow(object):
         self.key72.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.key72.setFrameShadow(QtWidgets.QFrame.Raised)
         self.key72.setObjectName("key72")
-        self.ke62 = QtWidgets.QFrame(self.centralwidget)
-        self.ke62.setGeometry(QtCore.QRect(720, 390, 16, 81))
-        self.ke62.setStyleSheet("background: "+theme.unpressedwhitekeycolor)
-        self.ke62.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.ke62.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.ke62.setObjectName("ke62")
+        self.key62 = QtWidgets.QFrame(self.centralwidget)
+        self.key62.setGeometry(QtCore.QRect(720, 390, 16, 81))
+        self.key62.setStyleSheet("background: "+theme.unpressedwhitekeycolor)
+        self.key62.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.key62.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.key62.setObjectName("key62")
         self.key67 = QtWidgets.QFrame(self.centralwidget)
         self.key67.setGeometry(QtCore.QRect(780, 390, 16, 81))
         self.key67.setStyleSheet("background: "+theme.unpressedwhitekeycolor)
@@ -743,7 +743,7 @@ class Ui_mainWindow(object):
         self.key70.raise_()
         self.key77.raise_()
         self.key72.raise_()
-        self.ke62.raise_()
+        self.key62.raise_()
         self.key67.raise_()
         self.key75.raise_()
         self.key65.raise_()
@@ -812,3 +812,20 @@ class Ui_mainWindow(object):
         self.notes2.setText(_translate("mainWindow", "C  E  G  B"))
         self.signature.setText(_translate("mainWindow", "Chordnation,\n"
 "by .lx"))
+
+
+    def changeKey(self, ct, keynumber, isWhite, isPressed):
+        """ Given a keynumber (where A=0, the first key in the 88-key keyboard),
+        turns that into pressed/unpressed theme color """
+
+        # Based on key, executes command to change the key color
+        if(isWhite):
+            if(isPressed):
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.pressedwhitekeycolor+'")')
+            else:
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.unpressedwhitekeycolor+'")')
+        else:
+            if(isPressed):
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.pressedblackkeycolor+'")')
+            else:
+                exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.unpressedblackkeycolor+'")')

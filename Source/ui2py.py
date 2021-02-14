@@ -6,6 +6,8 @@ import os
 inputpath = '.\\resources\mainWindow.ui'
 tempinputpath =".\\resources\mainWindowTemp.py"
 outputpath = ".\\mainWindow.py"
+newfuncpath = ".\\newFunctionsUI.txt"
+
 os.listdir(".\\resources")
 
 # Dictionary that contains every word that needs to be replaced, and what value it needs
@@ -42,9 +44,17 @@ for line in input:
 
     output.write(newLine)
 
+# Adds new functions to mainWindow.py
+
+toadd = open(newfuncpath, "rt")
+
+for line in toadd:
+    output.write(line)
+
 # Close files
 output.close()
 input.close()
+toadd.close()
 
 # Deletes temp file
 os.remove(tempinputpath)

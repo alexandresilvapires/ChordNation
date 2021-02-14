@@ -23,11 +23,12 @@ CREATE TABLE scale (
 );
 
 
-/* A Chord entry is composed of a name and list of intervals (Interval = 'NumberQuality', Ex: 5p for perfect fifth)
- *   Ex: <'Major7','["3M","5p","7M"]'>
+/* A Chord entry is composed of a name, symbol (where X is replaced by the note later) and list of intervals (Interval = 'NumberQuality', Ex: 5p for perfect fifth)
+ *   Ex: <'Major7', 'X+7' ,["3M","5p","7M"]'>
  */
 CREATE TABLE chord (
     c_name VARCHAR(15),
+    c_symbol VARCHAR(15),
     intervals VARCHAR(30) NOT NULL,
 
     CONSTRAINT pk_name_chord PRIMARY KEY (c_name)
