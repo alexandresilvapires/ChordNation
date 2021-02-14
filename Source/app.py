@@ -1,10 +1,19 @@
+#!/usr/bin/python3
 # Main app file for Chordnation, by .Lx
 # Handles communication between GUI and Database, and handles MIDI input
+
+from wsgiref.handlers import CGIHandler
+from flask import Flask
+from flask import render_template, request
+
+## Libs postgres
+import psycopg2
+import psycopg2.extras
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSize, QThread
 from PyQt5.QtGui import QFont
-from PySimpleGUI.PySimpleGUI import TRANSPARENT_BUTTON, theme
+
 import music
 import rtmidi
 import styles
@@ -18,6 +27,45 @@ import sys
 import mainWindow
 
 # ------------------------
+# Database Communication
+# ------------------------
+
+app = Flask(__name__)
+
+## SGBD configs
+DB_HOST="db.tecnico.ulisboa.pt"
+DB_USER="ist192414" 
+DB_DATABASE=DB_USER
+DB_PASSWORD="-"
+DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
+
+def makequery(query):
+    """ Given a query, executes it in the database, seperating each obtained value in lists with resultspace size"""
+    dbConn=None
+    cursor=None
+    try:
+        # Connects to the database
+        dbConn = psycopg2.connect(DB_CONNECTION_STRING)
+        cursor = dbConn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+
+        #Executes query
+        cursor.execute(query)
+
+        #Turns it into a list
+        results = []
+        for r in cursor:
+            results.append(r)
+
+        return results
+
+    except Exception as e:
+        return str(e) 
+    finally:
+        cursor.close()
+        dbConn.close()
+
+
+# ------------------------
 # MIDI-Handler
 # ------------------------
 
@@ -28,7 +76,7 @@ def setup_midi_connection(port):
 
     #Checks if port number is legit
     if(midiin.get_port_count() < port-1 or port < 0):
-        raise ValueError("Port Number invalid")
+        raise ValueError("\nPort Number invalid\n")
     
     #Enables port
     if(not midiin.is_port_open()):
@@ -101,12 +149,11 @@ def play_progression(midiin, window, ct, progression):
 def challange_generator(midiin, window, ct, progs, scales):
     """ Given a list of possible progressions (name, progression), plays a random progression in a random key"""
 
+
     # Picks a random progression, scale and key, and makes the progression
     prog = random.choice(progs)
     scale = random.choice(scales)
     key = random.choice(['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','B'])
-
-    print(prog, scale, key)
 
     progression = music.make_progression(key, scale, prog[1])
 
@@ -128,8 +175,11 @@ class challangeThread(QThread):
     
     def run(self):
         """ Handles the full program after main window creation, handling MIDI setup and calling exercice generation """
+
+        time.sleep(1)       #Used to give time for the UI to load
+
         # Sets up MIDI
-        midiin = setup_midi_connection(0)
+        midiin = setup_midi_connection(1)
 
         # Starts exercise (still temporary)
 
@@ -139,23 +189,16 @@ class challangeThread(QThread):
         #When getting the progression from the database, we keep each chord in order of appearence,
         #   composed by: ScaleNote (eg: II), and a list which especifies the chord
         #   as ["ChordSymbol","ListOfIntervalsWhichMakeItUp"].
-        #   To use the list of intervals, it needs to be eval'd and seperated into (IntervalSize,'quality'), 
-        #   which is done next
-
-        twofiveone = [['II',"m7", '["3m","5p","7m"]'],
-                ['V',"7", '["3M","5p","7m"]'],
-                ['I',"maj7", '["3M","5p","7M"]']]
+        #   To use the list of intervals, it needs to be eval'd and separated into (IntervalSize,'quality'), 
+        #   which is done next in format_prog_from_database()
+        twofiveone = makequery("select degree, c_name, intervals from progcontains natural join chord where p_name = '2-5-1' order by position asc;")
 
         twofiveone = music.format_prog_from_database(twofiveone)
+        print(twofiveone)
 
-        # Todo: get new format fixed in challange
-        time.sleep(1)
-        #challange_generator(midiin, self.ct,self.win, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (MajorScale, MajorScale))
+        
+        challange_generator(midiin, self.ct,self.win, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (MajorScale, MajorScale))
 
-
-# ------------------------
-# Database Handling
-# ------------------------
 
 # ------------------------
 # GUI Handling
@@ -169,7 +212,7 @@ ct.set_via_theme_name("Incognito")
 def startup():
     """ Generates the main program window and runs main program"""
 
-    app = QApplication(sys.argv)
+    guiapp = QApplication(sys.argv)
     mainWin = QtWidgets.QMainWindow()
     win = mainWindow.Ui_mainWindow()
     win.setupUi(mainWin, ct)
@@ -180,7 +223,7 @@ def startup():
     challageGen.start()
 
     #Starts GUI
-    sys.exit(app.exec_())
+    sys.exit(guiapp.exec_())
 
 
 # ------------------------

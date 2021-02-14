@@ -326,7 +326,7 @@ def sep_interval_pair(interval):
             numbersTemp += letter
         else:
             quality += letter
-    print(numbersTemp, quality)
+
     return (eval(numbersTemp),quality)
 
 def note_from_interval(note, interval: int, quality):
@@ -393,9 +393,10 @@ def make_chord(root, intervals: list) -> list:
     return notes
 
 def make_progression(root, scale: list, chords: list) -> list:
-    """ Given a scale (in tones), and a list of chords (number of note and chord. Ex: (II,[list to make minor])),
+    """ Given a scale (in tones), and a list of chords (number of note, symbol and chord. Ex: (II,"-7",[list to make minor])),
     returns every note of every chord of the progression"""
 
+    print(chords)
     resultingChords = []
 
     #Gets the scale notes
@@ -405,7 +406,7 @@ def make_progression(root, scale: list, chords: list) -> list:
     for chord in chords:
         chordRoot = note_from_scale_accidental(scale, root, chord[0])
 
-        resultingChords.append(make_chord(chordRoot, chord[1]))
+        resultingChords.append(make_chord(chordRoot, chord[2]))
 
     return resultingChords
 
@@ -459,7 +460,7 @@ def format_prog_from_database(prog):
 
         newChord.append(newIntervals)
         formatedProg.append(newChord)
-    print(formatedProg)
+
     return formatedProg
 
 # ------------------------
