@@ -41,9 +41,9 @@
    <widget class="QPushButton" name="keyButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>100</y>
-      <width>141</width>
+      <width>171</width>
       <height>21</height>
      </rect>
     </property>
@@ -75,8 +75,8 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>50</y>
-      <width>101</width>
+      <y>40</y>
+      <width>111</width>
       <height>41</height>
      </rect>
     </property>
@@ -92,13 +92,16 @@
     <property name="text">
      <string>Options</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
    <widget class="QPushButton" name="progButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>130</y>
-      <width>141</width>
+      <width>171</width>
       <height>21</height>
      </rect>
     </property>
@@ -129,9 +132,9 @@
    <widget class="QPushButton" name="tcsButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>160</y>
-      <width>141</width>
+      <width>171</width>
       <height>21</height>
      </rect>
     </property>
@@ -162,9 +165,9 @@
    <widget class="QPushButton" name="themesButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>190</y>
-      <width>141</width>
+      <width>171</width>
       <height>21</height>
      </rect>
     </property>
@@ -1869,14 +1872,17 @@
    <widget class="QFrame" name="holder">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>120</y>
-      <width>591</width>
-      <height>231</height>
+      <x>200</x>
+      <y>80</y>
+      <width>641</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background:rgb(56, 56, 56)</string>
+     <string notr="true">background:rgb(56, 56, 56);
+border-width:1px;
+border-radius:50px;
+border-color: red;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -1889,8 +1895,8 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>571</width>
-       <height>211</height>
+       <width>621</width>
+       <height>251</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -1905,7 +1911,7 @@
      <widget class="QLabel" name="keylabel">
       <property name="geometry">
        <rect>
-        <x>210</x>
+        <x>240</x>
         <y>20</y>
         <width>131</width>
         <height>31</height>
@@ -1929,9 +1935,9 @@
      <widget class="QLabel" name="chord1">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>50</y>
-        <width>101</width>
+        <x>210</x>
+        <y>80</y>
+        <width>191</width>
         <height>81</height>
        </rect>
       </property>
@@ -1959,9 +1965,9 @@
      <widget class="QLabel" name="chord0">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>50</y>
-        <width>101</width>
+        <x>0</x>
+        <y>80</y>
+        <width>211</width>
         <height>81</height>
        </rect>
       </property>
@@ -1989,9 +1995,9 @@
      <widget class="QLabel" name="chord2">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>50</y>
-        <width>101</width>
+        <x>410</x>
+        <y>80</y>
+        <width>211</width>
         <height>81</height>
        </rect>
       </property>
@@ -2019,9 +2025,9 @@
      <widget class="QLabel" name="notes0">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>120</y>
-        <width>151</width>
+        <x>10</x>
+        <y>160</y>
+        <width>191</width>
         <height>31</height>
        </rect>
       </property>
@@ -2043,9 +2049,9 @@
      <widget class="QLabel" name="notes1">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>120</y>
-        <width>201</width>
+        <x>200</x>
+        <y>160</y>
+        <width>221</width>
         <height>31</height>
        </rect>
       </property>
@@ -2067,9 +2073,9 @@
      <widget class="QLabel" name="notes2">
       <property name="geometry">
        <rect>
-        <x>360</x>
-        <y>120</y>
-        <width>151</width>
+        <x>420</x>
+        <y>160</y>
+        <width>191</width>
         <height>31</height>
        </rect>
       </property>
@@ -2115,7 +2121,7 @@
 by .lx</string>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="seperator_top">
     <property name="geometry">
      <rect>
       <x>-10</x>
@@ -2134,7 +2140,45 @@ by .lx</string>
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <zorder>frame</zorder>
+   <widget class="QFrame" name="seperator_mid">
+    <property name="geometry">
+     <rect>
+      <x>-20</x>
+      <y>350</y>
+      <width>1081</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background: rgb(111, 111, 111)</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QFrame" name="seperator_bottom">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>371</y>
+      <width>1051</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:rgb(56, 56, 56)</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <zorder>seperator_top</zorder>
    <zorder>keyButton</zorder>
    <zorder>optionsLabel</zorder>
    <zorder>progButton</zorder>
@@ -2230,6 +2274,8 @@ by .lx</string>
    <zorder>holder</zorder>
    <zorder>key1</zorder>
    <zorder>signature</zorder>
+   <zorder>seperator_bottom</zorder>
+   <zorder>seperator_mid</zorder>
   </widget>
  </widget>
  <resources/>
