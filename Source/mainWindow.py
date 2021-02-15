@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\resources\mainWindow.ui'
+# Form implementation generated from reading ui file './resources/mainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.2
 #
@@ -13,6 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow, theme):
+        self.chordview = True
         mainWindow.setObjectName("mainWindow")
         mainWindow.setWindowModality(QtCore.Qt.NonModal)
         mainWindow.resize(1036, 466)
@@ -803,13 +804,13 @@ class Ui_mainWindow(object):
         self.progButton.setText(_translate("mainWindow", "Progressions"))
         self.tcsButton.setText(_translate("mainWindow", "Toggle Chords / Symbols"))
         self.themesButton.setText(_translate("mainWindow", "Themes"))
-        self.keylabel.setText(_translate("mainWindow", "Key: C"))
-        self.chord1.setText(_translate("mainWindow", "V7 b9"))
-        self.chord0.setText(_translate("mainWindow", "II-7"))
-        self.chord2.setText(_translate("mainWindow", "IMaj7"))
-        self.notes0.setText(_translate("mainWindow", "D  F  A  C"))
-        self.notes1.setText(_translate("mainWindow", "G  B  D  F  Ab"))
-        self.notes2.setText(_translate("mainWindow", "C  E  G  B"))
+        self.keylabel.setText(_translate("mainWindow", " "))
+        self.chord1.setText(_translate("mainWindow", " "))
+        self.chord0.setText(_translate("mainWindow", " "))
+        self.chord2.setText(_translate("mainWindow", " "))
+        self.notes0.setText(_translate("mainWindow", " "))
+        self.notes1.setText(_translate("mainWindow", " "))
+        self.notes2.setText(_translate("mainWindow", " "))
         self.signature.setText(_translate("mainWindow", "Chordnation,\n"
 "by .lx"))
 
@@ -829,3 +830,50 @@ class Ui_mainWindow(object):
                 exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.pressedblackkeycolor+'")')
             else:
                 exec('self.key'+str(keynumber)+'.setStyleSheet("background: '+ct.unpressedblackkeycolor+'")')
+
+    def setChordText(self, ct, chordsymbol, notes, chordnumber):
+        """ Given a chord symbol and a list of notes, as well as the number of the chord to change in the window (0-2),
+        changes the chord text and note list below to those values, writting them in the ct.todocolor if chordnumber is 0"""
+
+        #Checks if chordnumber is valid
+        if(chordnumber not in [0,1,2]):
+            raise ValueError("Chordnumber out of range: setChordText(); Must be in [0,2]")
+
+        #Makes the note text from the array, adding spacing between
+        notetext = ''
+        for i in range(0,len(notes)):
+            notetext += notes[i]
+            if(i != len(notes)-1):
+                notetext += '  '
+
+        #Writes the notes and chord symbol in the text:
+        exec('self.chord'+str(chordnumber)+'.setText("'+chordsymbol+'")')
+        exec('self.notes'+str(chordnumber)+'.setText("'+notetext+'")')
+
+        if(chordnumber == 0):
+            exec('self.chord'+str(chordnumber)+'.setStyleSheet("color: '+ct.todocolor+'")')
+            exec('self.notes'+str(chordnumber)+'.setStyleSheet("color: '+ct.todocolor+'")')
+
+    def setChordTodo(self, ct, chordnumber):
+        """ Given a chord number, changes that chord and note label to the ct.donecolor """
+
+        #Checks if chordnumber is valid
+        if(chordnumber not in [0,1,2]):
+            raise ValueError("Chordnumber out of range: setChordTodo(); Must be in [0,2]")
+    
+        exec('self.chord'+str(chordnumber)+'.setStyleSheet("color: '+ct.todocolor+'")')
+        exec('self.notes'+str(chordnumber)+'.setStyleSheet("color: '+ct.todocolor+'")')
+
+    def setChordDone(self, ct, chordnumber):
+        """ Given a chord number, changes that chord and note label to the ct.donecolor """
+
+        #Checks if chordnumber is valid
+        if(chordnumber not in [0,1,2]):
+            raise ValueError("Chordnumber out of range: setChordDone(); Must be in [0,2]")
+    
+        exec('self.chord'+str(chordnumber)+'.setStyleSheet("color: '+ct.donecolor+'")')
+        exec('self.notes'+str(chordnumber)+'.setStyleSheet("color: '+ct.donecolor+'")')
+
+    def setKeyText(self, key):
+        """Given a key, sets the key text to 'Key: givenkey'"""
+        self.keylabel.setText('Key: '+key)

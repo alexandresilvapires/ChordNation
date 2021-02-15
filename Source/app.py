@@ -34,9 +34,9 @@ app = Flask(__name__)
 
 ## SGBD configs
 DB_HOST="db.tecnico.ulisboa.pt"
-DB_USER="ist192414" 
+DB_USER="-" 
 DB_DATABASE=DB_USER
-DB_PASSWORD="-"
+DB_PASSWORD="amdspLUCARIO7"
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
 
 def makequery(query):
@@ -127,22 +127,32 @@ def play_chord(midiin, window, ct, objective):
 
             window.changeKey(ct, keynumber, isWhite, noteStat[1])
 
-
 def play_progression(midiin, window, ct, progression):
     """ Given a chord progression, makes player play each chord """
 
-    #Writes each chord in window
-
+    #Writes first 3 chords in window (symbol or chord)
+    for i in range(0,max(len(progression),3)):
+        if(window.chordview):
+            #Chord symbol is done by first note and the chord symbol
+            window.setChordText(ct, progression[i][2][0]+progression[i][1],progression[i][2], i)
+    
+        else:
+            #Chord symbol is done by chord number and the chord symbol
+            window.setChordText(ct, progression[i][0]+progression[i][1],progression[i][2], i)
 
     #For each chord, highlights message, and makes midi recognition
-    for chord in progression:
+    for i in range(0,len(progression)):
 
         #Highlight chord in site
-        print("Current chord: ", chord)
+        print("Current chord: ", progression[i][2])
+
+        window.setChordTodo(ct, i%3)
 
         #Make player play chord
-        objective = music.chord_to_note_1_12(chord, True)
+        objective = music.chord_to_note_1_12(progression[i][2], True)
         play_chord(midiin, window, ct, objective)
+
+        window.setChordDone(ct, i % 3)
 
     print("Success!")
 
@@ -155,10 +165,13 @@ def challange_generator(midiin, window, ct, progs, scales):
     scale = random.choice(scales)
     key = random.choice(['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','B'])
 
+    #Prog[0] contains the prog name and prog[1] the progression details
     progression = music.make_progression(key, scale, prog[1])
 
     print(prog[0], "in the key of",key)
+    window.setKeyText(key)
     play_progression(midiin, window, ct, progression)
+
 
 # ------------------------
 # Startup
@@ -171,7 +184,8 @@ class challangeThread(QThread):
         self.win = window
     
     def __del__(self):
-        self.wait()
+        #self.wait()
+        pass
     
     def run(self):
         """ Handles the full program after main window creation, handling MIDI setup and calling exercice generation """
@@ -191,7 +205,7 @@ class challangeThread(QThread):
         #   as ["ChordSymbol","ListOfIntervalsWhichMakeItUp"].
         #   To use the list of intervals, it needs to be eval'd and separated into (IntervalSize,'quality'), 
         #   which is done next in format_prog_from_database()
-        twofiveone = makequery("select degree, c_name, intervals from progcontains natural join chord where p_name = '2-5-1' order by position asc;")
+        twofiveone = makequery("select degree, c_symbol, intervals from progcontains natural join chord where p_name = '2-5-1' order by position asc;")
 
         twofiveone = music.format_prog_from_database(twofiveone)
         print(twofiveone)

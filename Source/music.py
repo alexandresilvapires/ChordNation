@@ -394,7 +394,7 @@ def make_chord(root, intervals: list) -> list:
 
 def make_progression(root, scale: list, chords: list) -> list:
     """ Given a scale (in tones), and a list of chords (number of note, symbol and chord. Ex: (II,"-7",[list to make minor])),
-    returns every note of every chord of the progression"""
+    returns the number of note, symbol and the chord notes of every chord of the progression"""
 
     print(chords)
     resultingChords = []
@@ -406,7 +406,7 @@ def make_progression(root, scale: list, chords: list) -> list:
     for chord in chords:
         chordRoot = note_from_scale_accidental(scale, root, chord[0])
 
-        resultingChords.append(make_chord(chordRoot, chord[2]))
+        resultingChords.append([chord[0],chord[1],make_chord(chordRoot, chord[2])])
 
     return resultingChords
 

@@ -3,15 +3,22 @@
 
 import os
 
-inputpath = '.\\resources\mainWindow.ui'
-tempinputpath =".\\resources\mainWindowTemp.py"
-outputpath = ".\\mainWindow.py"
-newfuncpath = ".\\newFunctionsUI.txt"
+# Windows
+#inputpath = '.\\resources\mainWindow.ui'
+#tempinputpath =".\\resources\mainWindowTemp.py"
+#outputpath = ".\\mainWindow.py"
+#newfuncpath = ".\\newFunctionsUI.txt"
 
-os.listdir(".\\resources")
+
+# Linux
+inputpath = './resources/mainWindow.ui'
+tempinputpath ="./resources/mainWindowTemp.py"
+outputpath = "./mainWindow.py"
+newfuncpath = "./newFunctionsUI.txt"
+
 
 # Dictionary that contains every word that needs to be replaced, and what value it needs
-toreplace = {"def setupUi(self, mainWindow):":"def setupUi(self, mainWindow, theme):",
+toreplace = {"def setupUi(self, mainWindow):":"def setupUi(self, mainWindow, theme):\n        self.chordview = True",
             'rgb(111, 111, 111)"':'"+theme.maincolor',
             'rgb(255, 255, 255)"':'"+theme.unpressedwhitekeycolor',
             'rgb(4,4,4)"':'"+theme.unpressedblackkeycolor',
