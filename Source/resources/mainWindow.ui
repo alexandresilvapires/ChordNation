@@ -1926,7 +1926,7 @@ border-color: red;</string>
        <string notr="true">color:rgb(63, 63, 63)</string>
       </property>
       <property name="text">
-       <string>Key: C</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1956,7 +1956,7 @@ border-color: red;</string>
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="text">
-       <string>V7 b9</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1986,7 +1986,7 @@ border-color: red;</string>
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="text">
-       <string>II-7</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -2016,7 +2016,7 @@ border-color: red;</string>
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="text">
-       <string>IMaj7</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -2040,7 +2040,7 @@ border-color: red;</string>
        <string notr="true">color:rgb(255, 0, 0)</string>
       </property>
       <property name="text">
-       <string>D  F  A  C</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -2064,7 +2064,7 @@ border-color: red;</string>
        <string notr="true">color:rgb(63, 63, 63)</string>
       </property>
       <property name="text">
-       <string>G  B  D  F  Ab</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -2088,7 +2088,7 @@ border-color: red;</string>
        <string notr="true">color:rgb(63, 63, 63)</string>
       </property>
       <property name="text">
-       <string>C  E  G  B</string>
+       <string> </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

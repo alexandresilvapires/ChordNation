@@ -11,7 +11,7 @@
         <todocolor>#a42222</todocolor>
         <donecolor>#065e0a</donecolor>
         <challangetextcolor>#272727</challangetextcolor>
-        <optionstextcolor>#b1acbe</optionstextcolor>
+        <optionstextcolor>#272727</optionstextcolor>
 
         <unpressedwhitekeycolor>#ffffff</unpressedwhitekeycolor>
         <pressedwhitekeycolor>#b1acbe</pressedwhitekeycolor>
@@ -32,9 +32,27 @@
         <optionstextcolor>#c8d1f1</optionstextcolor>
 
         <unpressedwhitekeycolor>#5a6176</unpressedwhitekeycolor>
-        <pressedwhitekeycolor>#1a1e28</pressedwhitekeycolor>
+        <pressedwhitekeycolor>#b8c1e1</pressedwhitekeycolor>
         <unpressedblackkeycolor>#070c1c</unpressedblackkeycolor>
-        <pressedblackkeycolor>#000000</pressedblackkeycolor>
+        <pressedblackkeycolor>#c8d1f1</pressedblackkeycolor>
+
+        <challangefont>Palatino Linotype</challangefont>
+        <optionsfont>Palatino Linotype</optionsfont>
+        <signaturefont>Script MT Bold</signaturefont>
+    </theme>
+    <theme name="Pastel">
+        <maincolor>#F9F9F9</maincolor>
+        <accentcolor>#E2A3C7</accentcolor>
+        <sheetcolor>#F9F9F9</sheetcolor>
+        <todocolor>#60435F</todocolor>
+        <donecolor>#D67AB1</donecolor>
+        <challangetextcolor>#5FBFBA</challangetextcolor>
+        <optionstextcolor>#D67AB1</optionstextcolor>
+
+        <unpressedwhitekeycolor>#F9F9F9</unpressedwhitekeycolor>
+        <pressedwhitekeycolor>#D67AB1</pressedwhitekeycolor>
+        <unpressedblackkeycolor>#A8DCD9</unpressedblackkeycolor>
+        <pressedblackkeycolor>#40A09C</pressedblackkeycolor>
 
         <challangefont>Palatino Linotype</challangefont>
         <optionsfont>Palatino Linotype</optionsfont>

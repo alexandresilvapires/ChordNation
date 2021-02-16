@@ -38,6 +38,9 @@
         if(chordnumber == 0):
             exec('self.chord'+str(chordnumber)+'.setStyleSheet("color: '+ct.todocolor+'")')
             exec('self.notes'+str(chordnumber)+'.setStyleSheet("color: '+ct.todocolor+'")')
+        else:
+            exec('self.chord'+str(chordnumber)+'.setStyleSheet("color: '+ct.challangetextcolor+'")')
+            exec('self.notes'+str(chordnumber)+'.setStyleSheet("color: '+ct.challangetextcolor+'")')
 
     def setChordTodo(self, ct, chordnumber):
         """ Given a chord number, changes that chord and note label to the ct.donecolor """

@@ -27,6 +27,7 @@ toreplace = {"def setupUi(self, mainWindow):":"def setupUi(self, mainWindow, the
             'rgb(255, 0, 0)"':'"+theme.todocolor',
             'rgb(0, 255, 0)"':'"+theme.donecolor',
             'rgb(56, 56, 56)"':'"+theme.accentcolor',
+            'rgb(56, 56, 56);':'"+theme.accentcolor+";',
             'rgb(214, 214, 214)"':'"+theme.optionstextcolor',
             'rgb(140, 140, 140)"':'"+theme.accentcolor'}
 
