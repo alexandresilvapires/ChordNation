@@ -72,10 +72,7 @@ def note_to_number(note) -> int:
             value = 11
     
     #Adds the accidentals and makes the note octave independent 
-    if(value+accidental > 11):
-        value = value+accidental+1
-    else:
-        value = value+accidental
+    value = value+accidental
     
     return note_format(value)
 
@@ -396,7 +393,6 @@ def make_progression(root, scale: list, chords: list) -> list:
     """ Given a scale (in tones), and a list of chords (number of note, symbol and chord. Ex: (II,"-7",[list to make minor])),
     returns the number of note, symbol and the chord notes of every chord of the progression"""
 
-    print(chords)
     resultingChords = []
 
     #Gets the scale notes
@@ -438,6 +434,7 @@ def chord_to_note_1_12(chord, in_notes):
         ar[note] = True
 
     return ar
+
 
 def format_prog_from_database(prog):
     """ Given a progression from the database, it is formated into a easier-to-work format:

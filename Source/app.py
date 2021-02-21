@@ -33,10 +33,10 @@ import mainWindow
 app = Flask(__name__)
 
 ## SGBD configs
-DB_HOST="db.tecnico.ulisboa.pt"
-DB_USER="-" 
+DB_HOST=" "
+DB_USER=" " 
 DB_DATABASE=DB_USER
-DB_PASSWORD="-"
+DB_PASSWORD=" "
 DB_CONNECTION_STRING = "host=%s dbname=%s user=%s password=%s" % (DB_HOST, DB_DATABASE, DB_USER, DB_PASSWORD)
 
 def makequery(query):
@@ -86,15 +86,16 @@ def setup_midi_connection(port):
     return midiin
 
 
-def convert_midi_message_note_number_status(message) -> int:
+def convert_midi_message_note_number_status(message):
     """ Given a midi message, returns the number of the note involved
-        in music.py notation (C=0, B=11) and True if it was pressed, or False if released"""
+    in music.py notation (C=0, B=11) and True if it was pressed, or False if released """
 
     # Gets number note from message and converts it to music.py notation,
     # Adds status True if sensitivity > 0
+
     return (message[0][1] % 12, message[0][2] != 0)
 
-def convert_midi_message_to_key_number(message) -> int:
+def convert_midi_message_to_key_number(message):
     """ Given a midi message, returns the number of the key corresponding to the note involved """
 
     # Gets the message that contains the key and changes it to have a 0 where the keys start
@@ -131,7 +132,7 @@ def play_progression(midiin, window, ct, progression):
     """ Given a chord progression, makes player play each chord """
 
     #Writes first 3 chords in window (symbol or chord)
-    for i in range(0,max(len(progression),3)):
+    for i in range(0,min(len(progression),3)):
         if(window.chordview):
             #Chord symbol is done by first note and the chord symbol
             window.setChordText(ct, progression[i][2][0]+progression[i][1],progression[i][2], i)
@@ -146,13 +147,30 @@ def play_progression(midiin, window, ct, progression):
         #Highlight chord in site
         print("Current chord: ", progression[i][2])
 
-        window.setChordTodo(ct, i%3)
-
         #Make player play chord
         objective = music.chord_to_note_1_12(progression[i][2], True)
         play_chord(midiin, window, ct, objective)
 
-        window.setChordDone(ct, i % 3)
+        # If it's the last chord, sets chord to green, waits x seconds and quits
+        if(i == len(progression) - 1):
+            window.setChordDone(ct, min(2, len(progression)-1))
+            time.sleep(0.2)
+            break
+
+        #If there is more than 3 chords left,just shifts them right else starts turning chords green 
+        if(len(progression)- i > 3):
+            if(window.chordview):
+                #Chord symbol is done by first note and the chord symbol
+                window.shiftText(ct, progression[i+3][2][0]+progression[i+3][1],progression[i+3][2])
+    
+            else:
+                #Chord symbol is done by chord number and the chord symbol
+                window.shiftText(ct, progression[i+3][0]+progression[i+3][1],progression[i+3][2])
+        else:
+            window.setChordDone(ct, min(3,len(progression)) - len(progression) + i)
+            window.setChordTodo(ct, min(3,len(progression)) - len(progression) + i+1)
+
+    window.resetText(ct)
 
     print("Success!")
 
@@ -164,6 +182,7 @@ def challange_generator(midiin, window, ct, progs, scales):
     prog = random.choice(progs)
     scale = random.choice(scales)
     key = random.choice(['C','C#','Db','D','D#','Eb','E','F','F#','Gb','G','G#','Ab','A','A#','B'])
+    key = 'C'
 
     #Prog[0] contains the prog name and prog[1] the progression details
     progression = music.make_progression(key, scale, prog[1])
@@ -171,6 +190,7 @@ def challange_generator(midiin, window, ct, progs, scales):
     print(prog[0], "in the key of",key)
     window.setKeyText(key)
     play_progression(midiin, window, ct, progression)
+    return
 
 
 # ------------------------
@@ -208,12 +228,11 @@ class challangeThread(QThread):
         twofiveone = makequery("select degree, c_symbol, intervals from progcontains natural join chord where p_name = '2-5-1' order by position asc;")
 
         twofiveone = music.format_prog_from_database(twofiveone)
-        print(twofiveone)
-
+        twofive = [twofiveone[0], twofiveone[1]]
         
         challange_generator(midiin, self.ct,self.win, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (MajorScale, MajorScale))
 
-        challange_generator(midiin, self.ct,self.win, (("ii-V-I",twofiveone),("ii-V-I",twofiveone)), (MajorScale, MajorScale))
+        return
 
 
 # ------------------------
@@ -233,6 +252,7 @@ def startup():
     win = mainWindow.Ui_mainWindow()
     win.setupUi(mainWin, ct)
     mainWin.show()
+    win.resetText(ct)
 
     # Runs main program code in a thread
     challageGen = challangeThread(win, ct)

@@ -898,3 +898,34 @@ class Ui_mainWindow(object):
     def setKeyText(self, key):
         """Given a key, sets the key text to 'Key: givenkey'"""
         self.keylabel.setText('Key: '+key)
+
+    def shiftText(self, ct, newChord, newNotes):
+        """ Shifts every chord to the left, adding a new chord in the right """
+        self.chord0.setText(self.chord1.text())
+        self.notes0.setText(self.notes1.text())
+
+        self.chord1.setText(self.chord2.text())
+        self.notes1.setText(self.notes2.text())
+
+        self.chord2.setText(newChord)
+
+        notetext = ''
+        for i in range(0,len(newNotes)):
+            notetext += newNotes[i]
+            if(i != len(newNotes)-1):
+                notetext += '  '
+
+        self.notes2.setText(notetext)
+
+    def resetText(self, ct):
+        """Turns all notes and chord to blank and default color"""
+        
+        for i in range(0,3):
+            exec('self.chord'+str(i)+'.setText(" ")')
+            exec('self.notes'+str(i)+'.setText(" ")')
+            if(i == 0):
+                exec('self.chord'+str(i)+'.setStyleSheet("color: '+ct.todocolor+'")')
+                exec('self.notes'+str(i)+'.setStyleSheet("color: '+ct.todocolor+'")')
+            else:
+                exec('self.chord'+str(i)+'.setStyleSheet("color: '+ct.challangetextcolor+'")')
+                exec('self.notes'+str(i)+'.setStyleSheet("color: '+ct.challangetextcolor+'")')
